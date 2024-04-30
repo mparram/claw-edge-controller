@@ -167,7 +167,7 @@ board.on("ready", () => {
         socket.emit("endgame", "launch claw");
         socket.emit("readytoplay", false);
          zStepper.step({
-            steps: 689
+            steps: 769
         }, () => {
             setTimeout(() => {
                 relay.toggle();
@@ -183,9 +183,9 @@ board.on("ready", () => {
                     setTimeout(() => {
                         var gotohome = setInterval(() => {
                             if (endyDown) {
-                                moveClaw(yStepper, 20, 1);
+                                moveClaw(yStepper, 2000, 1);
                             }else if (endxUp) {
-                                moveClaw(xStepper, 20, 1);
+                                moveClaw(xStepper, 2000, 1);
                             } else {
                                 setTimeout(() => {
                                     relay.toggle();
@@ -194,7 +194,7 @@ board.on("ready", () => {
                                 }, 1000);
                                 clearInterval(gotohome);
                             }
-                        }, 25);
+                        }, 2005);
                     }, 200)
                 });
             }, 2000);
