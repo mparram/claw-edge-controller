@@ -81,69 +81,21 @@ board.on("ready", () => {
         },
         rpm: 180,
     });
-    let xStepperMove = 0;
-    let yStepperMove = 0;
-    let zStepperMove = 0;
     zStepper.rpm(180).ccw();
-    zStepper.step(800, () => {
-        socket.on("control", (control, act) => {
-            if (act == "down") {
-                if ((control == "ArrowUp") && (endyUp)) {
-                    if (yStepperMove == 0) {
-                        yStepperMove = 1;
-                        moveClawAccel(yStepper, 20, 0, control);
-                    } else if (yStepperMove == 2) {
-                        yStepperMove = 1;
-                        moveClawDecel(yStepper, 20, 1);
-                        moveClawAccel(yStepper, 20, 0, control);
-                    }
-                } else if ((control == "ArrowDown") && (endyDown)) {
-                    if (yStepperMove == 0) {
-                        yStepperMove = 2;
-                        moveClawAccel(yStepper, 20, 1, control);
-                    } else if (yStepperMove == 1) {
-                        yStepperMove = 2;
-                        moveClawDecel(yStepper, 20, 0);
-                        moveClawAccel(yStepper, 20, 1, control);
-                    }
-                } else if (control == "Space") {
-                    console.log("space");
-                    active = false;
-                    launchClaw(relay);
-                } else if ((control == "ArrowLeft") && (endxUp)) {
-                    if (xStepperMove == 0) {
-                        xStepperMove = 1;
-                        moveClawAccel(xStepper, 20, 1, control);
-                    } else if (xStepperMove == 2) {
-                        xStepperMove = 1;
-                        moveClawDecel(xStepper, 20, 0);
-                        moveClawAccel(xStepper, 20, 1, control);
-                    }
-                } else if ((control == "ArrowRight") && (endxDown)){
-                    if (xStepperMove == 0) {
-                        xStepperMove = 2;
-                        moveClawAccel(xStepper, 20, 0, control);
-                    } else if (xStepperMove == 1) {
-                        xStepperMove = 2;
-                        moveClawDecel(xStepper, 20, 1);
-                        moveClawAccel(xStepper, 20, 0, control);
-                    }
-                }
-            } else if (act == "up") {
-                if ((control == "ArrowUp") && (yStepperMove == 1)) {
-                    yStepperMove = 0;
-                    moveClawDecel(yStepper, 20, 0);
-                    
-                } else if ((control == "ArrowDown") && (yStepperMove == 2)) {
-                    yStepperMove = 0;
-                    moveClawDecel(yStepper, 20, 1);
-                } else if ((control == "ArrowLeft") && (xStepperMove == 1)) {
-                    xStepperMove = 0;
-                    moveClawDecel(xStepper, 20, 1);
-                } else if ((control == "ArrowRight") && (xStepperMove == 2)){
-                    xStepperMove = 0;
-                    moveClawDecel(xStepper, 20, 0);
-                }
+    zStepper.step(720, () => {
+        socket.on("control", (control) => {
+            if ((control == "ArrowUp") && (endyUp)) {
+                moveClaw(yStepper, 20, 0);
+            } else if ((control == "ArrowDown") && (endyDown)) {
+                moveClaw(yStepper, 20, 1);
+            } else if (control == "Space") {
+                console.log("space");
+                active = false;
+                launchClaw(relay);
+            } else if ((control == "ArrowLeft") && (endxUp)) {
+                moveClaw(xStepper, 20, 1);
+            } else if ((control == "ArrowRight") && (endxDown)){
+                moveClaw(xStepper, 20, 0);
             }
         });
 
@@ -179,7 +131,7 @@ board.on("ready", () => {
             setTimeout(() => {
                 console.log("uploading claw");
                 zStepper.step({
-                    steps: 769,
+                    steps: 689,
                     direction: Stepper.DIRECTION.CCW
                 }, () => {
                     console.log("uploaded claw");
@@ -211,47 +163,6 @@ board.on("ready", () => {
         }
         stepper.step({
             steps: steps
-        }, () => {
-        });
-    }
-    function moveClawAccel(stepper, steps, direction, control) {
-        if (direction == 1) {
-            stepper.rpm(180).ccw();
-        }else if (direction == 0) {
-            stepper.rpm(180).cw();
-        }
-        stepper.step({
-            steps: steps,
-            accel: 15
-        }, () => {
-            if (control == "ArrowUp") {
-                while ((endyUp) && (yStepperMove == 1)) {
-                    moveClaw(stepper, 20, 0);
-                } 
-            } else if (control == "ArrowDown") {
-                while ((endyDown) && (yStepperMove == 2)) {
-                    moveClaw(stepper, 20, 1);
-                }
-            } else if (control == "ArrowLeft") {
-                while ((endxUp) && (xStepperMove == 1)) {
-                    moveClaw(stepper, 20, 1);
-                }
-            } else if (control == "ArrowRight") {
-                while ((endxDown) && (xStepperMove == 2)) {
-                    moveClaw(stepper, 20, 0);
-                } 
-            }
-        });
-    }
-    function moveClawDecel(stepper, steps, direction) {
-        if (direction == 1) {
-            stepper.rpm(180).ccw();
-        }else if (direction == 0) {
-            stepper.rpm(180).cw();
-        }
-        stepper.step({
-            steps: 20,
-            decel: 15
         }, () => {
         });
     }
