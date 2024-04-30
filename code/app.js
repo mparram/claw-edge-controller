@@ -43,13 +43,13 @@ board.on("ready", () => {
     var endyDown = true;
     var endyUp = true;
     endx0.on("close", () => endxUp = true);
-    endx0.on("open", () => {endxUp = false; xStepper.stop();});
-    endx1.on("close", () => {endxDown = false; xStepper.stop();});
+    endx0.on("open", () => {endxUp = false; moveClaw(xStepper, 5, 0);});
+    endx1.on("close", () => {endxDown = false; moveClaw(xStepper, 5, 1);});
     endx1.on("open", () => endxDown = true);
-    endy0.on("close", () => {endyUp = false; yStepper.stop();});
+    endy0.on("close", () => {endyUp = false; moveClaw(yStepper, 5, 1)});
     endy0.on("open", () => endyUp = true);
     endy1.on("close", () => endyDown = true);
-    endy1.on("open", () => {endyDown = false; yStepper.stop();});
+    endy1.on("open", () => {endyDown = false; moveClaw(yStepper, 5, 0)});
     var relay = new Relay(25);
     // x axis
     const xStepper = new Stepper({
@@ -129,17 +129,17 @@ board.on("ready", () => {
             } else if (act == "up") {
                 if ((control == "ArrowUp") && (yStepperMove == 1)) {
                     yStepperMove = 0;
-                    yStepper.stop();
+                    yStepper.step(0);
                     
                 } else if ((control == "ArrowDown") && (yStepperMove == 2)) {
                     yStepperMove = 0;
-                    yStepper.stop();
+                    yStepper.step(0);
                 } else if ((control == "ArrowLeft") && (xStepperMove == 1)) {
                     xStepperMove = 0;
-                    xStepper.stop();
+                    xStepper.step(0);
                 } else if ((control == "ArrowRight") && (xStepperMove == 2)){
                     xStepperMove = 0;
-                    xStepper.stop();
+                    xStepper.step(0);
                 }
             }
         });
