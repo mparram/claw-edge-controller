@@ -9,7 +9,6 @@ const readline = require('readline');
 var wsport = process.env.WS_PORT || 8080;
 var connectorsvc = process.env.CONNECTOR_SVC || "edge-ws-connector.edge-ws-connector.svc.cluster.local";
 const { io } = require('socket.io-client');
-const { set } = require("yaml/dist/schema/yaml-1.1/set");
 var inAction = [];
 
 const socket = io("http://" + connectorsvc + ":" + wsport, {
