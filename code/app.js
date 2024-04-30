@@ -92,18 +92,18 @@ board.on("ready", () => {
                 if ((control == "ArrowUp") && (endyUp)) {
                     if (yStepperMove == 0) {
                         yStepperMove = 1;
-                        moveClawAccel(yStepper, 20, 0, control);
+                        moveClaw(yStepper, 20000, 0, control);
                     } else if (yStepperMove == 2) {
                         yStepperMove = 1;
-                        moveClawAccel(yStepper, 20, 0, control);
+                        moveClaw(yStepper, 20000, 0, control);
                     }
                 } else if ((control == "ArrowDown") && (endyDown)) {
                     if (yStepperMove == 0) {
                         yStepperMove = 2;
-                        moveClawAccel(yStepper, 20, 1, control);
+                        moveClawA(yStepper, 20000, 1, control);
                     } else if (yStepperMove == 1) {
                         yStepperMove = 2;
-                        moveClawAccel(yStepper, 20, 1, control);
+                        moveClaw(yStepper, 20000, 1, control);
                     }
                 } else if (control == "Space") {
                     console.log("space");
@@ -112,18 +112,18 @@ board.on("ready", () => {
                 } else if ((control == "ArrowLeft") && (endxUp)) {
                     if (xStepperMove == 0) {
                         xStepperMove = 1;
-                        moveClawAccel(xStepper, 20, 1, control);
+                        moveClaw(xStepper, 20000, 1, control);
                     } else if (xStepperMove == 2) {
                         xStepperMove = 1;
-                        moveClawAccel(xStepper, 20, 1, control);
+                        moveClaw(xStepper, 20000, 1, control);
                     }
                 } else if ((control == "ArrowRight") && (endxDown)){
                     if (xStepperMove == 0) {
                         xStepperMove = 2;
-                        moveClawAccel(xStepper, 20, 0, control);
+                        moveClaw(xStepper, 20000, 0, control);
                     } else if (xStepperMove == 1) {
                         xStepperMove = 2;
-                        moveClawAccel(xStepper, 20, 0, control);
+                        moveClaw(xStepper, 20000, 0, control);
                     }
                 }
             } else if (act == "up") {
