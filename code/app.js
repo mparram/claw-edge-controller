@@ -207,7 +207,9 @@ board.on("ready", () => {
             stepper.rpm(180).cw();
         }
         stepper.step({
-            steps: steps
+            steps: steps,
+            accel: 0,
+            decel: 0
         }, () => {
         });
     }
@@ -218,17 +220,10 @@ board.on("ready", () => {
             stepper.rpm(180).cw();
         }
         stepper.step({
-            steps: steps
+            steps: steps,
+            accel: 0,
+            decel: 0
         }, () => {
-            if ((control == "ArrowUp") && (endyUp) && (yStepperMove == 1)) {
-                moveClawLoop(stepper, 50, direction, control);
-            } else if ((control == "ArrowDown") && (endyDown) && (yStepperMove == 2)) {
-                moveClawLoop(stepper, 50, direction, control);
-            } else if ((control == "ArrowLeft") && (endxUp) && (xStepperMove == 1)) {
-                moveClawLoop(stepper, 50, direction, control);
-            } else if ((control == "ArrowRight") && (endxDown) && (xStepperMove == 2)){
-                moveClawLoop(stepper, 50, direction, control);
-            }
         });
     }
     function moveClawAccel(stepper, steps, direction, control) {
@@ -239,17 +234,23 @@ board.on("ready", () => {
         }
         stepper.step({
             steps: 60,
-            accel: 30
+            accel: 30,
+            decel: 0
         }, () => {
-            if ((control == "ArrowUp") && (endyUp) && (yStepperMove == 1)) {
-                moveClawLoop(stepper, 50, 0, control);
-            } else if ((control == "ArrowDown") && (endyDown) && (yStepperMove == 2)) {
-                moveClawLoop(stepper, 50, 1, control);
-            } else if ((control == "ArrowLeft") && (endxUp) && (xStepperMove == 1)) {
-                moveClawLoop(stepper, 50, 1, control);
-            } else if ((control == "ArrowRight") && (endxDown) && (xStepperMove == 2)){
-                moveClawLoop(stepper, 50, 0, control);
-            }
+
+            var moveInterval = setInterval(() => {
+                if ((control == "ArrowUp") && (endyUp) && (yStepperMove == 1)) {
+                    moveClawLoop(stepper, 20, 0, control);
+                } else if ((control == "ArrowDown") && (endyDown) && (yStepperMove == 2)) {
+                    moveClawLoop(stepper, 20, 1, control);
+                } else if ((control == "ArrowLeft") && (endxUp) && (xStepperMove == 1)) {
+                    moveClawLoop(stepper, 20, 1, control);
+                } else if ((control == "ArrowRight") && (endxDown) && (xStepperMove == 2)){
+                    moveClawLoop(stepper, 20, 0, control);
+                } else {
+                    clearInterval(moveInterval);
+                }
+            }, 25);
         });
     }
     function moveClawDecel(stepper, steps, direction) {
@@ -260,7 +261,9 @@ board.on("ready", () => {
         }
         stepper.step({
             steps: 20,
+            accel: 0,
             decel: 19
+
         }, () => {
         });
     }
