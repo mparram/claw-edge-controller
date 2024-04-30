@@ -215,6 +215,26 @@ board.on("ready", () => {
         }, () => {
         });
     }
+    function moveClawLoop(stepper, steps, direction, control) {
+        if (direction == 1) {
+            stepper.rpm(180).ccw();
+        }else if (direction == 0) {
+            stepper.rpm(180).cw();
+        }
+        stepper.step({
+            steps: steps
+        }, () => {
+            if ((control == "ArrowUp") && (!endyDown) && (yStepperMove == 1)) {
+                moveClawLoop(stepper, 20, direction, control);
+            } else if ((control == "ArrowDown") && (!endyUp) && (yStepperMove == 2)) {
+                moveClawLoop(stepper, 20, direction, control);
+            } else if ((control == "ArrowLeft") && (!endxDown) && (xStepperMove == 1)) {
+                moveClawLoop(stepper, 20, direction, control);
+            } else if ((control == "ArrowRight") && (!endxUp) && (xStepperMove == 2)){
+                moveClawLoop(stepper, 20, direction, control);
+            }
+        });
+    }
     function moveClawAccel(stepper, steps, direction, control) {
         if (direction == 1) {
             stepper.rpm(180).ccw();
@@ -225,22 +245,14 @@ board.on("ready", () => {
             steps: steps,
             accel: 15
         }, () => {
-            if (control == "ArrowUp") {
-                while ((!endyDown) && (yStepperMove == 1)) {
-                    moveClaw(stepper, 20, 0);
-                } 
-            } else if (control == "ArrowDown") {
-                while ((!endyUp) && (yStepperMove == 2)) {
-                    moveClaw(stepper, 20, 1);
-                }
-            } else if (control == "ArrowLeft") {
-                while ((!endxDown) && (xStepperMove == 1)) {
-                    moveClaw(stepper, 20, 1);
-                }
-            } else if (control == "ArrowRight") {
-                while ((!endxUp) && (xStepperMove == 2)) {
-                    moveClaw(stepper, 20, 0);
-                } 
+            if ((control == "ArrowUp") && (!endyDown) && (yStepperMove == 1)) {
+                moveClawLoop(stepper, 20, 0, control);
+            } else if ((control == "ArrowDown") && (!endyUp) && (yStepperMove == 2)) {
+                moveClawLoop(stepper, 20, 1, control);
+            } else if ((control == "ArrowLeft") && (!endxDown) && (xStepperMove == 1)) {
+                moveClawLoop(stepper, 20, 1, control);
+            } else if ((control == "ArrowRight") && (!endxUp) && (xStepperMove == 2)){
+                moveClawLoop(stepper, 20, 0, control);
             }
         });
     }
