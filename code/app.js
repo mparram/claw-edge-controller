@@ -87,15 +87,14 @@ board.on("ready", () => {
     zStepper.rpm(180).ccw();
     zStepper.step(800, () => {
         socket.on("control", (control, act) => {
+            console.log("control: " + control + " act: " + act + " xStepperMove: " + xStepperMove + " yStepperMove: " + yStepperMove + " endxUp: " + endxUp + " endxDown: " + endxDown + " endyUp: " + endyUp + " endyDown: " + endyDown);
             if (act == "down") {
-                console.log("control: " + control + " act: " + act + " xStepperMove: " + xStepperMove + " yStepperMove: " + yStepperMove + " endxUp: " + endxUp + " endxDown: " + endxDown + " endyUp: " + endyUp + " endyDown: " + endyDown);
                 if ((control == "ArrowUp") && (endyUp)) {
                     if (yStepperMove == 0) {
                         yStepperMove = 1;
                         moveClawAccel(yStepper, 20, 0, control);
                     } else if (yStepperMove == 2) {
                         yStepperMove = 1;
-                        moveClawDecel(yStepper, 20, 1);
                         moveClawAccel(yStepper, 20, 0, control);
                     }
                 } else if ((control == "ArrowDown") && (endyDown)) {
@@ -104,7 +103,6 @@ board.on("ready", () => {
                         moveClawAccel(yStepper, 20, 1, control);
                     } else if (yStepperMove == 1) {
                         yStepperMove = 2;
-                        moveClawDecel(yStepper, 20, 0);
                         moveClawAccel(yStepper, 20, 1, control);
                     }
                 } else if (control == "Space") {
@@ -117,7 +115,6 @@ board.on("ready", () => {
                         moveClawAccel(xStepper, 20, 1, control);
                     } else if (xStepperMove == 2) {
                         xStepperMove = 1;
-                        moveClawDecel(xStepper, 20, 0);
                         moveClawAccel(xStepper, 20, 1, control);
                     }
                 } else if ((control == "ArrowRight") && (endxDown)){
@@ -126,7 +123,6 @@ board.on("ready", () => {
                         moveClawAccel(xStepper, 20, 0, control);
                     } else if (xStepperMove == 1) {
                         xStepperMove = 2;
-                        moveClawDecel(xStepper, 20, 1);
                         moveClawAccel(xStepper, 20, 0, control);
                     }
                 }
