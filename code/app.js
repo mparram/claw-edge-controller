@@ -89,7 +89,7 @@ board.on("ready", () => {
         socket.on("control", (control, act) => {
             if (act == "down") {
                 console.log("control: " + control + " act: " + act + " xStepperMove: " + xStepperMove + " yStepperMove: " + yStepperMove + " endxUp: " + endxUp + " endxDown: " + endxDown + " endyUp: " + endyUp + " endyDown: " + endyDown);
-                if ((control == "ArrowUp") && (!endyUp)) {
+                if ((control == "ArrowUp") && (!endyDown)) {
                     if (yStepperMove == 0) {
                         yStepperMove = 1;
                         moveClawAccel(yStepper, 20, 0, control);
@@ -98,7 +98,7 @@ board.on("ready", () => {
                         moveClawDecel(yStepper, 20, 1);
                         moveClawAccel(yStepper, 20, 0, control);
                     }
-                } else if ((control == "ArrowDown") && (!endyDown)) {
+                } else if ((control == "ArrowDown") && (!endyUp)) {
                     if (yStepperMove == 0) {
                         yStepperMove = 2;
                         moveClawAccel(yStepper, 20, 1, control);
@@ -111,7 +111,7 @@ board.on("ready", () => {
                     console.log("space");
                     active = false;
                     launchClaw(relay);
-                } else if ((control == "ArrowLeft") && (!endxUp)) {
+                } else if ((control == "ArrowLeft") && (!endxDown)) {
                     if (xStepperMove == 0) {
                         xStepperMove = 1;
                         moveClawAccel(xStepper, 20, 1, control);
@@ -120,7 +120,7 @@ board.on("ready", () => {
                         moveClawDecel(xStepper, 20, 0);
                         moveClawAccel(xStepper, 20, 1, control);
                     }
-                } else if ((control == "ArrowRight") && (!endxDown)){
+                } else if ((control == "ArrowRight") && (!endxUp)){
                     if (xStepperMove == 0) {
                         xStepperMove = 2;
                         moveClawAccel(xStepper, 20, 0, control);
@@ -226,19 +226,19 @@ board.on("ready", () => {
             accel: 15
         }, () => {
             if (control == "ArrowUp") {
-                while ((!endyUp) && (yStepperMove == 1)) {
+                while ((!endyDown) && (yStepperMove == 1)) {
                     moveClaw(stepper, 20, 0);
                 } 
             } else if (control == "ArrowDown") {
-                while ((!endyDown) && (yStepperMove == 2)) {
+                while ((!endyUp) && (yStepperMove == 2)) {
                     moveClaw(stepper, 20, 1);
                 }
             } else if (control == "ArrowLeft") {
-                while ((!endxUp) && (xStepperMove == 1)) {
+                while ((!endxDown) && (xStepperMove == 1)) {
                     moveClaw(stepper, 20, 1);
                 }
             } else if (control == "ArrowRight") {
-                while ((!endxDown) && (xStepperMove == 2)) {
+                while ((!endxUp) && (xStepperMove == 2)) {
                     moveClaw(stepper, 20, 0);
                 } 
             }
