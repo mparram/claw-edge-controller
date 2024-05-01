@@ -29,15 +29,26 @@ socket.on("panic", () => {
 });
 board.on("ready", () => {
     var relaylight = new Relay(23);
+    var inactiveTime = 60000;
+    var inactiveTimeout = setTimeout(() => {
+        relaylight.open();
+    }, inactiveTime);
     socket.on("user_on", (status) => {
         if (status){
             console.log("user_on status: " + status);
             relaylight.close();
+            //reiniciar el timeout
+            clearTimeout(inactiveTimeout);
+            inactiveTimeout = setTimeout(() => {
+                relaylight.open();
+            }, inactiveTime);
         } else {
             console.log("user_on status: " + status);
             relaylight.open();
         }
     });
+
+
     const endx0 = new Switch(49);
     const endx1 = new Switch(51);
     const endy0 = new Switch(53);
