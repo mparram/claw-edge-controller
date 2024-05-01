@@ -23,6 +23,10 @@ socket.on("connect", () => {
 socket.on("disconnect", () => {
     console.log("io disconnected");
 });
+socket.on("panic", () => {
+    console.log("panic");
+    process.exit();
+});
 board.on("ready", () => {
     var relaylight = new Relay(23);
     socket.on("user_on", (status) => {
@@ -92,42 +96,46 @@ board.on("ready", () => {
                 if ((control == "ArrowUp") && (endyUp)) {
                     if (yStepperMove == 0) {
                         yStepperMove = 1;
-                        moveClaw(yStepper, 20000, 0);
-                        setInterval(() => {
+                        moveClaw(yStepper, 2000, 0);
+                        var upInterval = setInterval(() => {
                             if (!endyUp) {
                                 stopClaw(yStepper, 0);
                                 yStepperMove = 0;
+                                clearInterval(upInterval);
                             }
-                        }, 20);
+                        }, 50);
                     } else if (yStepperMove == 2) {
                         yStepperMove = 1;
-                        moveClaw(yStepper, 20000, 0);
-                        setInterval(() => {
+                        moveClaw(yStepper, 2000, 0);
+                        var upInterval = setInterval(() => {
                             if (!endyUp) {
                                 stopClaw(yStepper, 0);
                                 yStepperMove = 0;
+                                clearInterval(upInterval);
                             }
-                        }, 20);
+                        }, 50);
                     }
                 } else if ((control == "ArrowDown") && (endyDown)) {
                     if (yStepperMove == 0) {
                         yStepperMove = 2;
-                        moveClaw(yStepper, 20000, 1);
-                        setInterval(() => {
+                        moveClaw(yStepper, 2000, 1);
+                        var downInterval = setInterval(() => {
                             if (!endyDown) {
                                 stopClaw(yStepper, 1);
                                 yStepperMove = 0;
+                                clearInterval(downInterval);
                             }
-                        }, 20);
+                        }, 50);
                     } else if (yStepperMove == 1) {
                         yStepperMove = 2;
-                        moveClaw(yStepper, 20000, 1);
-                        setInterval(() => {
+                        moveClaw(yStepper, 2000, 1);
+                        var downInterval = setInterval(() => {
                             if (!endyDown) {
                                 stopClaw(yStepper, 1);
                                 yStepperMove = 0;
+                                clearInterval(downInterval);
                             }
-                        }, 20);
+                        }, 50);
                     }
                 } else if (control == "Space") {
                     console.log("space");
@@ -136,40 +144,44 @@ board.on("ready", () => {
                 } else if ((control == "ArrowLeft") && (endxUp)) {
                     if (xStepperMove == 0) {
                         xStepperMove = 1;
-                        moveClaw(xStepper, 20000, 1);
-                        setInterval(() => {
+                        moveClaw(xStepper, 2000, 1);
+                        var leftInterval = setInterval(() => {
                             if (!endxUp) {
                                 stopClaw(xStepper, 1);
                                 xStepperMove = 0;
+                                clearInterval(leftInterval);
                             }
                         }, 20);
                     } else if (xStepperMove == 2) {
                         xStepperMove = 1;
-                        moveClaw(xStepper, 20000, 1);
-                        setInterval(() => {
+                        moveClaw(xStepper, 2000, 1);
+                        var leftInterval = setInterval(() => {
                             if (!endxUp) {
                                 stopClaw(xStepper, 1);
                                 xStepperMove = 0;
+                                clearInterval(leftInterval);
                             }
                         }, 20);
                     }
                 } else if ((control == "ArrowRight") && (endxDown)){
                     if (xStepperMove == 0) {
                         xStepperMove = 2;
-                        moveClaw(xStepper, 20000, 0);
-                        setInterval(() => {
+                        moveClaw(xStepper, 2000, 0);
+                        var rightInterval = setInterval(() => {
                             if (!endxDown) {
                                 stopClaw(xStepper, 0);
                                 xStepperMove = 0;
+                                clearInterval(rightInterval);
                             }
                         }, 20);
                     } else if (xStepperMove == 1) {
                         xStepperMove = 2;
-                        moveClaw(xStepper, 20000, 0);
-                        setInterval(() => {
+                        moveClaw(xStepper, 2000, 0);
+                        var rightInterval = setInterval(() => {
                             if (!endxDown) {
                                 stopClaw(xStepper, 0);
                                 xStepperMove = 0;
+                                clearInterval(rightInterval);
                             }
                         }, 20);
                     }
@@ -177,17 +189,17 @@ board.on("ready", () => {
             } else if (act == "up") {
                 if ((control == "ArrowUp") && (yStepperMove == 1)) {
                     yStepperMove = 0;
-                    yStepper.step(0);
+                    stopClaw(yStepper, 0);
                     
                 } else if ((control == "ArrowDown") && (yStepperMove == 2)) {
                     yStepperMove = 0;
-                    yStepper.step(0);
+                    stopClaw(yStepper, 1);
                 } else if ((control == "ArrowLeft") && (xStepperMove == 1)) {
                     xStepperMove = 0;
-                    xStepper.step(0);
+                    stopClaw(xStepper, 1);
                 } else if ((control == "ArrowRight") && (xStepperMove == 2)){
                     xStepperMove = 0;
-                    xStepper.step(0);
+                    stopClaw(xStepper, 0);
                 }
             }
         });
@@ -262,15 +274,8 @@ board.on("ready", () => {
         });
     }
     function stopClaw(stepper, direction) {
-        if (direction == 1) {
-            stepper.rpm(180).cw();
-        }else if (direction == 0) {
-            stepper.rpm(180).ccw();
-        }
-        stepper.step({
-            steps: 0,
-            accel: 0,
-            decel: 0
+        stepper.rpm(0).step({
+            steps: 0
         }, () => {
         });
     }
