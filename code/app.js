@@ -27,9 +27,10 @@ socket.on("panic", () => {
     console.log("panic");
     process.exit();
 });
+
 board.on("ready", () => {
     var relaylight = new Relay(23);
-    var inactiveTime = 60000;
+    var inactiveTime = 600000;
     var inactiveTimeout = setTimeout(() => {
         relaylight.open();
     }, inactiveTime);
@@ -184,6 +185,10 @@ board.on("ready", () => {
         })
     });
     function launchClaw(relay) {
+        clearTimeout(inactiveTimeout);
+        inactiveTimeout = setTimeout(() => {
+            relaylight.open();
+        }, inactiveTime);
         zStepper.rpm(180).cw();
         console.log("launching claw");
         socket.emit("endgame", "launch claw");
