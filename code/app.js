@@ -232,6 +232,15 @@ board.on("ready", () => {
                             }else if (endxUp) {
                                 moveClaw(xStepper, 100, 1);
                             } else {
+                                const colors = [
+                                    // need to adjust the colors
+                                    { name: "orange", r: 600, g: 640, b: 560},
+                                    { name: "green", r: 391, g: 627, b: 515},
+                                    { name: "blue", r: 483, g: 915, b: 1000},
+                                    { name: "yellow", r: 708, g: 759, b: 536}
+                                ];
+                                let minDistance = 400;
+                                let closestColor = "empty";
                                 setTimeout(() => {
                                     // Read color with TCS34725 RGB sensor 
                                     board.i2cReadOnce(ADDRESS, COMMAND_BIT | CDATAL_REGISTER, 8, function(bytes) {
@@ -239,27 +248,38 @@ board.on("ready", () => {
                                         var r = bytes[3] << 8 | bytes[2];
                                         var g = bytes[5] << 8 | bytes[4];
                                         var b = bytes[7] << 8 | bytes[6];
-                                        const colors = [
-                                            // need to adjust the colors
-                                            { name: "orange", r: 600, g: 640, b: 560, c: 1900 },
-                                            { name: "green", r: 391, g: 627, b: 515, c: 1627 },
-                                            { name: "blue", r: 361, g: 565, b: 570, c: 1570 },
-                                            { name: "yellow", r: 708, g: 759, b: 536, c: 2125 }
-                                        ];
-                                        let minDistance = 400;
-                                        let closestColor = "empty";
+                                        
                                         for (let color of colors) {
-                                            const distance = Math.sqrt(Math.pow(r - color.r, 2) + Math.pow(g - color.g, 2) + Math.pow(b - color.b, 2) + Math.pow(c - color.c, 2));
+                                            const distance = Math.sqrt(Math.pow(r - color.r, 2) + Math.pow(g - color.g, 2) + Math.pow(b - color.b, 2));
                                             if (distance < minDistance) {
                                                 minDistance = distance;
                                                 closestColor = color.name;
                                             }
                                         }
-                                        socket.emit("color", closestColor);
+
                                         console.log("color: " + closestColor);
                                         console.log("R: " + r + " G: " + g + " B: " + b + " C: " + c);
                                     });
                                     setTimeout(() => {
+                                        if (closestColor == "empty") {
+                                            board.i2cReadOnce(ADDRESS, COMMAND_BIT | CDATAL_REGISTER, 8, function(bytes) {
+                                                var c = bytes[1] << 8 | bytes[0];
+                                                var r = bytes[3] << 8 | bytes[2];
+                                                var g = bytes[5] << 8 | bytes[4];
+                                                var b = bytes[7] << 8 | bytes[6];
+                                                
+                                                for (let color of colors) {
+                                                    const distance = Math.sqrt(Math.pow(r - color.r, 2) + Math.pow(g - color.g, 2) + Math.pow(b - color.b, 2));
+                                                    if (distance < minDistance) {
+                                                        minDistance = distance;
+                                                        closestColor = color.name;
+                                                    }
+                                                }
+                                                console.log("color: " + closestColor);
+                                                console.log("R: " + r + " G: " + g + " B: " + b + " C: " + c);
+                                            });
+                                        }
+                                        socket.emit("color", closestColor);
                                         relay.toggle();
                                         active = true;
                                         socket.emit("readytoplay", true);
