@@ -31,7 +31,7 @@ socket.on("panic", () => {
 board.on("ready", () => {
 
     //I2C color sensor
-    this.i2cConfig();
+    board.i2cConfig();
     const ADDRESS = 0x29;
     const COMMAND_BIT = 0x80;
     const ENABLE_REGISTER = 0x00;
@@ -39,11 +39,11 @@ board.on("ready", () => {
     const CONTROL_REGISTER = 0x0F;
     const CDATAL_REGISTER = 0x14;
     // Enable the device (Power On and ADC Enable)
-    this.i2cWriteReg(ADDRESS, COMMAND_BIT | ENABLE_REGISTER, 0x03);
+    board.i2cWriteReg(ADDRESS, COMMAND_BIT | ENABLE_REGISTER, 0x03);
     // Set integration time to 154 ms
-    this.i2cWriteReg(ADDRESS, COMMAND_BIT | ATIME_REGISTER, 0xD5);
+    board.i2cWriteReg(ADDRESS, COMMAND_BIT | ATIME_REGISTER, 0xD5);
     // Set gain to 4x
-    this.i2cWriteReg(ADDRESS, COMMAND_BIT | CONTROL_REGISTER, 0x02);
+    board.i2cWriteReg(ADDRESS, COMMAND_BIT | CONTROL_REGISTER, 0x02);
   
 
 
@@ -234,7 +234,7 @@ board.on("ready", () => {
                             } else {
                                 setTimeout(() => {
                                     // Read color with TCS34725 RGB sensor 
-                                    this.i2cReadOnce(ADDRESS, COMMAND_BIT | CDATAL_REGISTER, 8, function(bytes) {
+                                    board.i2cReadOnce(ADDRESS, COMMAND_BIT | CDATAL_REGISTER, 8, function(bytes) {
                                         var c = bytes[1] << 8 | bytes[0];
                                         var r = bytes[3] << 8 | bytes[2];
                                         var g = bytes[5] << 8 | bytes[4];
