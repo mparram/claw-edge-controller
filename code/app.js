@@ -29,6 +29,24 @@ socket.on("panic", () => {
 });
 
 board.on("ready", () => {
+
+    //I2C color sensor
+    this.i2cConfig();
+    const ADDRESS = 0x29;
+    const COMMAND_BIT = 0x80;
+    const ENABLE_REGISTER = 0x00;
+    const ATIME_REGISTER = 0x01; // 700 ms - 256-Cycles
+    const CONTROL_REGISTER = 0x0F;
+    const CDATAL_REGISTER = 0x14;
+    // Enable the device (Power On and ADC Enable)
+    this.i2cWriteReg(ADDRESS, COMMAND_BIT | ENABLE_REGISTER, 0x03);
+    // Set integration time to 154 ms
+    this.i2cWriteReg(ADDRESS, COMMAND_BIT | ATIME_REGISTER, 0xD5);
+    // Set gain to 4x
+    this.i2cWriteReg(ADDRESS, COMMAND_BIT | CONTROL_REGISTER, 0x02);
+  
+
+
     var relaylight = new Relay(23);
     var inactiveTime = 600000;
     var inactiveTimeout = setTimeout(() => {
@@ -215,10 +233,40 @@ board.on("ready", () => {
                                 moveClaw(xStepper, 100, 1);
                             } else {
                                 setTimeout(() => {
-                                    relay.toggle();
-                                    active = true;
-                                    socket.emit("readytoplay", true);
-                                }, 1000);
+                                    // Read color with TCS34725 RGB sensor 
+                                    this.i2cReadOnce(ADDRESS, COMMAND_BIT | CDATAL_REGISTER, 8, function(bytes) {
+                                        var c = bytes[1] << 8 | bytes[0];
+                                        var r = bytes[3] << 8 | bytes[2];
+                                        var g = bytes[5] << 8 | bytes[4];
+                                        var b = bytes[7] << 8 | bytes[6];
+                                        const colors = [
+                                            // need to adjust the colors
+                                            { name: "red", r: 255, g: 0, b: 0, c: 300 },
+                                            { name: "green", r: 0, g: 255, b: 0, c: 300 },
+                                            { name: "blue", r: 0, g: 0, b: 255, c: 300 },
+                                            { name: "yellow", r: 255, g: 255, b: 0, c: 300 },
+                                            { name: "cyan", r: 0, g: 255, b: 255, c: 300 },
+                                            { name: "magenta", r: 255, g: 0, b: 255, c: 300 }, 
+                                            { name: "empty", r: 0, g: 0, b: 0, c: 300 }
+                                        ];
+                                        let minDistance = 200;
+                                        let closestColor = "empty";
+                                        for (let color of colors) {
+                                            const distance = Math.sqrt(Math.pow(r - color.r, 2) + Math.pow(g - color.g, 2) + Math.pow(b - color.b, 2) + Math.pow(c - color.c, 2));
+                                            if (distance < minDistance) {
+                                                minDistance = distance;
+                                                closestColor = color.name;
+                                            }
+                                        }
+                                        socket.emit("color", closestColor);
+                                        console.log("color: " + closestColor);
+                                    });
+                                    setTimeout(() => {
+                                        relay.toggle();
+                                        active = true;
+                                        socket.emit("readytoplay", true);
+                                    }, 500);
+                                },1000);
                                 clearInterval(gotohome);
                             }
                         }, 170);
