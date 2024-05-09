@@ -260,6 +260,7 @@ board.on("ready", () => {
                                         }
                                         socket.emit("color", closestColor);
                                         console.log("color: " + closestColor);
+                                        console.log("R: " + r + " G: " + g + " B: " + b + " C: " + c);
                                     });
                                     setTimeout(() => {
                                         relay.toggle();
