@@ -241,15 +241,12 @@ board.on("ready", () => {
                                         var b = bytes[7] << 8 | bytes[6];
                                         const colors = [
                                             // need to adjust the colors
-                                            { name: "red", r: 255, g: 0, b: 0, c: 300 },
-                                            { name: "green", r: 0, g: 255, b: 0, c: 300 },
-                                            { name: "blue", r: 0, g: 0, b: 255, c: 300 },
-                                            { name: "yellow", r: 255, g: 255, b: 0, c: 300 },
-                                            { name: "cyan", r: 0, g: 255, b: 255, c: 300 },
-                                            { name: "magenta", r: 255, g: 0, b: 255, c: 300 }, 
-                                            { name: "empty", r: 0, g: 0, b: 0, c: 300 }
+                                            { name: "orange", r: 600, g: 640, b: 560, c: 1900 },
+                                            { name: "green", r: 391, g: 627, b: 515, c: 1627 },
+                                            { name: "blue", r: 361, g: 565, b: 570, c: 1570 },
+                                            { name: "yellow", r: 708, g: 759, b: 536, c: 2125 }
                                         ];
-                                        let minDistance = 200;
+                                        let minDistance = 400;
                                         let closestColor = "empty";
                                         for (let color of colors) {
                                             const distance = Math.sqrt(Math.pow(r - color.r, 2) + Math.pow(g - color.g, 2) + Math.pow(b - color.b, 2) + Math.pow(c - color.c, 2));
