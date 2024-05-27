@@ -19,6 +19,7 @@ const socket = io("http://" + connectorsvc + ":" + wsport, {
 }); 
 socket.on("connect", () => {
     socket.emit("component", "hw01");
+    console.log("io connected");
 });
 socket.on("disconnect", () => {
     console.log("io disconnected");
@@ -29,7 +30,7 @@ socket.on("panic", () => {
 });
 
 board.on("ready", () => {
-
+    console.log("board ready");
     //I2C color sensor
     board.i2cConfig();
     const ADDRESS = 0x29;
@@ -236,7 +237,7 @@ board.on("ready", () => {
                                     // need to adjust the colors
                                     { name: "orange", r: 600, g: 640, b: 560},
                                     { name: "green", r: 391, g: 627, b: 515},
-                                    { name: "blue", r: 483, g: 915, b: 1000},
+                                    { name: "blue", r: 483, g: 915, b: 900},
                                     { name: "yellow", r: 708, g: 759, b: 536}
                                 ];
                                 let minDistance = 400;
