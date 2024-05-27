@@ -1,4 +1,4 @@
-FROM registry.access.redhat.com/ubi9/nodejs-20:1-38.1712567745
+FROM registry.access.redhat.com/ubi9/nodejs-20:1-44.1714669803
 USER root
 WORKDIR /app
 RUN chown -R 1001:0 /app
