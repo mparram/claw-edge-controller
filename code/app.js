@@ -282,7 +282,7 @@ board.on("ready", () => {
                                         var b = bytes[7] << 8 | bytes[6];
                                         if (c > 1100) {
                                             for (let color of colors) {
-                                                const distance = Math.sqrt(Math.pow(r - color.r, 2) + Math.pow(g - color.g, 2) + Math.pow(b - color.b, 2));
+                                                const distance = Math.sqrt(Math.pow(r - color.r, 2) + Math.pow(g - color.g, 2) + Math.pow(b - color.b, 2) + Math.pow((c/10) - (color.c/10), 2));
                                                 console.log("color: " + color.name + " distance: " + distance + " minDistance: " + minDistance);
                                                 if (distance < minDistance) {
                                                     minDistance = distance;
@@ -302,7 +302,7 @@ board.on("ready", () => {
                                                 var b = bytes[7] << 8 | bytes[6];
                                                 if (c > 1100) {
                                                     for (let color of colors) {
-                                                        const distance = Math.sqrt(Math.pow(r - color.r, 2) + Math.pow(g - color.g, 2) + Math.pow(b - color.b, 2));
+                                                        const distance = Math.sqrt(Math.pow(r - color.r, 2) + Math.pow(g - color.g, 2) + Math.pow(b - color.b, 2) + Math.pow((c/10) - (color.c/10), 2));
                                                         console.log("color: " + color.name + " distance: " + distance + " minDistance: " + minDistance);
                                                         if (distance < minDistance) {
                                                             minDistance = distance;
