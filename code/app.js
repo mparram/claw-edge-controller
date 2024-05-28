@@ -253,7 +253,9 @@ board.on("ready", () => {
                                     { name: "blue", r: 522, g: 1027, b: 1172, c: 2831},
                                     { name: "blue", r: 493, g: 958, b: 1091, c: 2637},
                                     { name: "blue", r: 335, g: 575, b: 624, c: 1572},
+                                    { name: "blue", r: 330, g: 637, b: 723, c: 1770},
                                     { name: "blue", r: 679, g: 1326, b: 1492, c: 3674},
+                                    { name: "blue", r: 577, g: 1357, b: 1611, c: 3809},
                                     { name: "blue", r: 315, g: 545, b: 598, c: 1490},
                                     { name: "blue", r: 607, g: 1242, b: 1429, c: 3441},
                                     { name: "blue", r: 307, g: 505, b: 538, c: 1379},
@@ -311,10 +313,12 @@ board.on("ready", () => {
                                                     }
                                                 }
                                                 console.log("color: " + closestColor);
+                                                socket.emit("color", closestColor);
                                                 console.log("R: " + r + " G: " + g + " B: " + b + " C: " + c);
                                             });
+                                        } else {
+                                            socket.emit("color", closestColor);
                                         }
-                                        socket.emit("color", closestColor);
                                         relay.toggle();
                                         active = true;
                                         socket.emit("readytoplay", true);
