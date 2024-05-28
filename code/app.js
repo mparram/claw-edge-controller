@@ -244,7 +244,7 @@ board.on("ready", () => {
                                     { name: "yellow", r: 708, g: 759, b: 536, c: 2100},
                                     { name: "yellow", r: 750, g: 759, b: 500, c: 2100}
                                 ];
-                                let minDistance = 400;
+                                let minDistance = 100;
                                 let closestColor = "empty";
                                 setTimeout(() => {
                                     // Read color with TCS34725 RGB sensor 
