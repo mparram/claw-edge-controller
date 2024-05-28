@@ -3,6 +3,7 @@ USER root
 WORKDIR /app
 RUN chown -R 1001:0 /app
 COPY package.json /app
+RUN npm install -g npm
 RUN npm install
 COPY . /app
 RUN dnf install systemd-udev -y

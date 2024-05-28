@@ -236,9 +236,13 @@ board.on("ready", () => {
                                 const colors = [
                                     // need to adjust the colors
                                     { name: "orange", r: 600, g: 640, b: 560},
+                                    { name: "orange", r: 750, g: 666, b: 563},
                                     { name: "green", r: 391, g: 627, b: 515},
+                                    { name: "green", r: 391, g: 700, b: 515},
                                     { name: "blue", r: 483, g: 915, b: 900},
-                                    { name: "yellow", r: 708, g: 759, b: 536}
+                                    { name: "blue", r: 500, g: 650, b: 900},
+                                    { name: "yellow", r: 708, g: 759, b: 536},
+                                    { name: "yellow", r: 750, g: 759, b: 500}
                                 ];
                                 let minDistance = 400;
                                 let closestColor = "empty";
@@ -288,7 +292,7 @@ board.on("ready", () => {
                                 },1000);
                                 clearInterval(gotohome);
                             }
-                        }, 170);
+                        }, 180);
                     }, 200)
                 });
             }, 2000);
