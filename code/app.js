@@ -131,8 +131,8 @@ board.on("ready", () => {
                             if ((!endyUp) || (yStepperMove != 1)) {
                                 clearInterval(upInterval);
                             }
-                            moveClaw(yStepper, 100, 0);
-                        }, 175);
+                            moveClaw(yStepper, 50, 0);
+                        }, 87);
                     }
                 } else if ((control == "ArrowDown") && (endyDown)) {
                     if (yStepperMove >= 0) {
@@ -141,8 +141,8 @@ board.on("ready", () => {
                             if ((!endyDown) || (yStepperMove != 2)) {
                                 clearInterval(downInterval);
                             }
-                            moveClaw(yStepper, 100, 1);
-                        }, 175);
+                            moveClaw(yStepper, 50, 1);
+                        }, 87);
                     }
                 } else if (control == "Space") {
                     console.log("space");
@@ -155,8 +155,8 @@ board.on("ready", () => {
                             if ((!endxUp) || (xStepperMove != 1)) {
                                 clearInterval(leftInterval);
                             }
-                            moveClaw(xStepper, 100, 1);
-                        }, 175);
+                            moveClaw(xStepper, 50, 1);
+                        }, 87);
                     }
                 } else if ((control == "ArrowRight") && (endxDown)){
                     if (xStepperMove >= 0) {
@@ -165,8 +165,8 @@ board.on("ready", () => {
                             if ((!endxDown) || (xStepperMove != 2)) {
                                 clearInterval(rightInterval);
                             }
-                            moveClaw(xStepper, 100, 0);
-                        }, 175);
+                            moveClaw(xStepper, 50, 0);
+                        }, 87);
                     }
                 }
             } else if (act == "up") {
@@ -229,9 +229,9 @@ board.on("ready", () => {
                     setTimeout(() => {
                         var gotohome = setInterval(() => {
                             if (endyDown) {
-                                moveClaw(yStepper, 100, 1);
+                                moveClaw(yStepper, 50, 1);
                             }else if (endxUp) {
-                                moveClaw(xStepper, 100, 1);
+                                moveClaw(xStepper, 50, 1);
                             } else {
                                 const colors = [
                                     // need to adjust the colors
@@ -322,7 +322,7 @@ board.on("ready", () => {
                                 },1000);
                                 clearInterval(gotohome);
                             }
-                        }, 175);
+                        }, 87);
                     }, 200)
                 });
             }, 2000);
