@@ -237,6 +237,7 @@ board.on("ready", () => {
                                     // need to adjust the colors
                                     { name: "orange", r: 1625, g: 926, b: 682, c: 3432},
                                     { name: "orange", r: 2307, g: 1164, b: 856, c: 4504},
+                                    { name: "orange", r: 3146, g: 1510, b: 1054, c: 6007},
                                     { name: "orange", r: 1190, g: 657, b: 503, c: 2445},
                                     { name: "orange", r: 2009, g: 1016, b: 749, c: 3956},
                                     { name: "orange", r: 761, g: 450, b: 359, c: 1596},
@@ -299,12 +300,14 @@ board.on("ready", () => {
                                                 var r = bytes[3] << 8 | bytes[2];
                                                 var g = bytes[5] << 8 | bytes[4];
                                                 var b = bytes[7] << 8 | bytes[6];
-                                                
-                                                for (let color of colors) {
-                                                    const distance = Math.sqrt(Math.pow(r - color.r, 2) + Math.pow(g - color.g, 2) + Math.pow(b - color.b, 2) + Math.pow(c - color.c, 2));
-                                                    if (distance < minDistance) {
-                                                        minDistance = distance;
-                                                        closestColor = color.name;
+                                                if (c > 1100) {
+                                                    for (let color of colors) {
+                                                        const distance = Math.sqrt(Math.pow(r - color.r, 2) + Math.pow(g - color.g, 2) + Math.pow(b - color.b, 2));
+                                                        console.log("color: " + color.name + " distance: " + distance + " minDistance: " + minDistance);
+                                                        if (distance < minDistance) {
+                                                            minDistance = distance;
+                                                            closestColor = color.name;
+                                                        }
                                                     }
                                                 }
                                                 console.log("color: " + closestColor);
