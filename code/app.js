@@ -132,7 +132,7 @@ board.on("ready", () => {
                                 clearInterval(upInterval);
                             }
                             moveClaw(yStepper, 100, 0);
-                        }, 170);
+                        }, 175);
                     }
                 } else if ((control == "ArrowDown") && (endyDown)) {
                     if (yStepperMove >= 0) {
@@ -142,7 +142,7 @@ board.on("ready", () => {
                                 clearInterval(downInterval);
                             }
                             moveClaw(yStepper, 100, 1);
-                        }, 170);
+                        }, 175);
                     }
                 } else if (control == "Space") {
                     console.log("space");
@@ -156,7 +156,7 @@ board.on("ready", () => {
                                 clearInterval(leftInterval);
                             }
                             moveClaw(xStepper, 100, 1);
-                        }, 170);
+                        }, 175);
                     }
                 } else if ((control == "ArrowRight") && (endxDown)){
                     if (xStepperMove >= 0) {
@@ -166,7 +166,7 @@ board.on("ready", () => {
                                 clearInterval(rightInterval);
                             }
                             moveClaw(xStepper, 100, 0);
-                        }, 170);
+                        }, 175);
                     }
                 }
             } else if (act == "up") {
@@ -235,14 +235,40 @@ board.on("ready", () => {
                             } else {
                                 const colors = [
                                     // need to adjust the colors
-                                    { name: "orange", r: 600, g: 640, b: 560, c: 2100},
-                                    { name: "orange", r: 750, g: 666, b: 563, c: 2100},
-                                    { name: "green", r: 391, g: 627, b: 515, c: 2100},
-                                    { name: "green", r: 391, g: 700, b: 515, c: 2100},
-                                    { name: "blue", r: 414, g: 699, b: 676, c: 1927},
-                                    { name: "blue", r: 500, g: 650, b: 900, c: 1900},
-                                    { name: "yellow", r: 708, g: 759, b: 536, c: 2100},
-                                    { name: "yellow", r: 750, g: 759, b: 500, c: 2100}
+                                    { name: "orange", r: 1625, g: 926, b: 682, c: 3432},
+                                    { name: "orange", r: 2307, g: 1164, b: 856, c: 4504},
+                                    { name: "orange", r: 1190, g: 657, b: 503, c: 2445},
+                                    { name: "orange", r: 2009, g: 1016, b: 749, c: 3956},
+                                    { name: "orange", r: 761, g: 450, b: 359, c: 1596},
+                                    { name: "orange", r: 1617, g: 851, b: 637, c: 3226},
+                                    { name: "orange", r: 1470, g: 866, b: 633, c: 3089},
+                                    { name: "orange", r: 1663, g: 990, b: 728, c: 3525},
+                                    { name: "green", r: 456, g: 761, b: 541, c: 1890},
+                                    { name: "green", r: 561, g: 1113, b: 708, c: 2506},
+                                    { name: "green", r: 302, g: 502, b: 399, c: 1225},
+                                    { name: "green", r: 728, g: 1394, b: 1086, c: 3402},
+                                    { name: "green", r: 358, g: 626, b: 445, c: 1479},
+                                    { name: "green", r: 561, g: 1084, b: 728, c: 2500},
+                                    { name: "blue", r: 522, g: 1027, b: 1172, c: 2831},
+                                    { name: "blue", r: 493, g: 958, b: 1091, c: 2637},
+                                    { name: "blue", r: 335, g: 575, b: 624, c: 1572},
+                                    { name: "blue", r: 679, g: 1326, b: 1492, c: 3674},
+                                    { name: "blue", r: 315, g: 545, b: 598, c: 1490},
+                                    { name: "blue", r: 607, g: 1242, b: 1429, c: 3441},
+                                    { name: "blue", r: 307, g: 505, b: 538, c: 1379},
+                                    { name: "blue", r: 496, g: 937, b: 1049, c: 2593},
+                                    { name: "yellow", r: 575, g: 571, b: 364, c: 1545},
+                                    { name: "yellow", r: 1351, g: 1256, b: 665, c: 3433},
+                                    { name: "yellow", r: 655, g: 623, b: 373, c: 1714},
+                                    { name: "yellow", r: 1734, g: 1588, b: 790, c: 4396},
+                                    { name: "yellow", r: 1472, g: 1330, b: 688, c: 3682},
+                                    { name: "yellow", r: 1906, g: 1770, b: 888, c: 4871},
+                                    { name: "yellow", r: 738, g: 697, b: 404, c: 1913},
+                                    { name: "yellow", r: 1433, g: 1316, b: 673, c: 3635},
+                                    { name: "yellow", r: 860, g: 863, b: 647, c: 2516},
+                                    { name: "yellow", r: 2304, g: 2130, b: 1023, c: 5885},
+                                    { name: "yellow", r: 2490, g: 2193, b: 1044, c: 6105},
+                                    { name: "yellow", r: 2509, g: 2209, b: 1051, c: 6154}
                                 ];
                                 let minDistance = 100;
                                 let closestColor = "empty";
@@ -293,7 +319,7 @@ board.on("ready", () => {
                                 },1000);
                                 clearInterval(gotohome);
                             }
-                        }, 180);
+                        }, 175);
                     }, 200)
                 });
             }, 2000);
