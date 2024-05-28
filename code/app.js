@@ -239,8 +239,8 @@ board.on("ready", () => {
                                     { name: "orange", r: 750, g: 666, b: 563, c: 2100},
                                     { name: "green", r: 391, g: 627, b: 515, c: 2100},
                                     { name: "green", r: 391, g: 700, b: 515, c: 2100},
-                                    { name: "blue", r: 483, g: 915, b: 900, c: 2100},
-                                    { name: "blue", r: 500, g: 650, b: 900, c: 2100},
+                                    { name: "blue", r: 414, g: 699, b: 676, c: 1927},
+                                    { name: "blue", r: 500, g: 650, b: 900, c: 1900},
                                     { name: "yellow", r: 708, g: 759, b: 536, c: 2100},
                                     { name: "yellow", r: 750, g: 759, b: 500, c: 2100}
                                 ];
@@ -256,6 +256,7 @@ board.on("ready", () => {
                                         
                                         for (let color of colors) {
                                             const distance = Math.sqrt(Math.pow(r - color.r, 2) + Math.pow(g - color.g, 2) + Math.pow(b - color.b, 2) + Math.pow(c - color.c, 2));
+                                            console.log("color: " + color.name + " distance: " + distance + " minDistance: " + minDistance);
                                             if (distance < minDistance) {
                                                 minDistance = distance;
                                                 closestColor = color.name;
