@@ -94,7 +94,7 @@ board.on("ready", () => {
             step: 2,
             dir: 5
         },
-        rpm: 180,
+        rpm: 2880,
     });
     // y axis
     const yStepper = new Stepper({
@@ -104,7 +104,7 @@ board.on("ready", () => {
             step: 3,
             dir: 6
         },
-        rpm: 180,
+        rpm: 2880,
     });
     // z axis
     const zStepper = new Stepper({
@@ -349,9 +349,9 @@ board.on("ready", () => {
     }
     function moveClaw(stepper, steps, direction) {
         if (direction == 1) {
-            stepper.rpm(180).ccw();
+            stepper.rpm(2880).ccw();
         }else if (direction == 0) {
-            stepper.rpm(180).cw();
+            stepper.rpm(2880).cw();
         }
         stepper.step({
             steps: steps,
