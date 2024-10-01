@@ -131,7 +131,7 @@ board.on("ready", () => {
                             if ((!endyUp) || (yStepperMove != 1)) {
                                 clearInterval(upInterval);
                             }
-                            moveClaw(yStepper, 50, 0);
+                            moveClaw(yStepper, 800, 0);
                         }, 87);
                     }
                 } else if ((control == "ArrowDown") && (endyDown)) {
@@ -141,7 +141,7 @@ board.on("ready", () => {
                             if ((!endyDown) || (yStepperMove != 2)) {
                                 clearInterval(downInterval);
                             }
-                            moveClaw(yStepper, 50, 1);
+                            moveClaw(yStepper, 800, 1);
                         }, 87);
                     }
                 } else if (control == "Space") {
@@ -155,7 +155,7 @@ board.on("ready", () => {
                             if ((!endxUp) || (xStepperMove != 1)) {
                                 clearInterval(leftInterval);
                             }
-                            moveClaw(xStepper, 50, 1);
+                            moveClaw(xStepper, 800, 1);
                         }, 87);
                     }
                 } else if ((control == "ArrowRight") && (endxDown)){
@@ -165,7 +165,7 @@ board.on("ready", () => {
                             if ((!endxDown) || (xStepperMove != 2)) {
                                 clearInterval(rightInterval);
                             }
-                            moveClaw(xStepper, 50, 0);
+                            moveClaw(xStepper, 800, 0);
                         }, 87);
                     }
                 }
@@ -190,16 +190,16 @@ board.on("ready", () => {
         process.stdin.on('keypress', (str, key) => {
             if (key && key.ctrl && key.name == 'c') process.exit();
             if ((key.name == "up") && (!endyUp)){
-                moveClaw(yStepper, 20, 0);
+                moveClaw(yStepper, 800, 0);
             } else if ((key.name == "down") && (endyDown)) {
-                moveClaw(yStepper, 20, 1);
+                moveClaw(yStepper, 800, 1);
             } else if (key.name == "space") {
                 active = false;
                 launchClaw(relay);
             } else if ((key.name == "left") && (endxUp)){
-                moveClaw(xStepper, 20, 1);
+                moveClaw(xStepper, 800, 1);
             } else if ((key.name == "right") && (endxDown)){
-                moveClaw(xStepper, 20, 0);
+                moveClaw(xStepper, 800, 0);
             }
         })
     });
@@ -229,9 +229,9 @@ board.on("ready", () => {
                     setTimeout(() => {
                         var gotohome = setInterval(() => {
                             if (endyDown) {
-                                moveClaw(yStepper, 50, 1);
+                                moveClaw(yStepper, 800, 1);
                             }else if (endxUp) {
-                                moveClaw(xStepper, 50, 1);
+                                moveClaw(xStepper, 800, 1);
                             } else {
                                 const colors = [
                                     // need to adjust the colors
